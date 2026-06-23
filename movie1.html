@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CineMax by Yogesh</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0c0c0f;--ink2:#141418;--ink3:#1c1c22;--surface:#232329;
+  --line:#2e2e38;--line2:#3a3a48;
+  --cream:#f0ebe0;--cream2:#d4cfc4;
+  --gold:#c9a84c;--gold-lt:#e8c96a;
+  --red:#c0392b;
+  --txt:#e8e4dc;--txt2:#9e9a93;--txt3:#6b6762;
+  --r:10px;
+}
+body{font-family:'Inter',sans-serif;background:var(--ink);color:var(--txt);min-height:100vh;font-size:14px;line-height:1.5}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:56px;border-bottom:1px solid var(--line);background:var(--ink)}
+.wordmark{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:3px;color:var(--cream);cursor:pointer}
+.wordmark em{color:var(--gold);font-style:normal}
+.nav-links{display:flex;gap:20px;align-items:center}
+.nav-link{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt2);cursor:pointer;padding:4px 0;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+.nav-link:hover,.nav-link.on{color:var(--cream);border-bottom-color:var(--gold)}
+.nav-pill{font-size:11px;letter-spacing:1px;text-transform:uppercase;background:var(--gold);color:var(--ink);padding:7px 16px;border-radius:3px;cursor:pointer;font-weight:700;border:none;font-family:'Inter',sans-serif;transition:background .15s}
+.nav-pill:hover{background:var(--gold-lt)}
+.pg{display:none}.pg.on{display:block}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:400px;border-bottom:1px solid var(--line);background:var(--ink2)}
+.hero-left{padding:48px 36px;display:flex;flex-direction:column;justify-content:center}
+.hero-eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.hero-h1{font-family:'Bebas Neue',sans-serif;font-size:66px;line-height:.93;letter-spacing:2px;color:var(--cream);margin-bottom:18px}
+.hero-h1 span{color:var(--gold)}
+.hero-sub{color:var(--txt2);font-size:13px;max-width:320px;line-height:1.8;margin-bottom:24px}
+.hero-search{display:flex;border:1px solid var(--line2);border-radius:var(--r);overflow:hidden;max-width:360px}
+.hero-search input{flex:1;background:var(--ink3);border:none;color:var(--txt);padding:11px 14px;font-size:13px;outline:none;font-family:'Inter',sans-serif}
+.hero-search input::placeholder{color:var(--txt3)}
+.hero-search button{background:var(--gold);color:var(--ink);border:none;padding:11px 18px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:'Inter',sans-serif}
+.hero-search button:hover{background:var(--gold-lt)}
+.hero-stats{display:flex;gap:24px;margin-top:28px;padding-top:24px;border-top:1px solid var(--line)}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--cream);letter-spacing:1px}
+.stat-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--txt3);margin-top:1px}
+.hero-right{display:flex;align-items:center;justify-content:center;padding:32px;gap:12px}
+.feat-card{border-radius:10px;overflow:hidden;border:1px solid var(--line);flex-shrink:0;position:relative;background:var(--ink3)}
+.feat-card.main{width:145px;height:215px}
+.feat-card.side{width:108px;height:168px;opacity:.6}
+.feat-card.side2{width:88px;height:138px;opacity:.35}
+.feat-poster{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.feat-icon{font-size:38px}
+.feat-icon-sm{font-size:26px}
+.feat-icon-xs{font-size:21px}
+.feat-label{position:absolute;bottom:0;left:0;right:0;padding:8px 10px;background:linear-gradient(0deg,rgba(0,0,0,.85),transparent)}
+.feat-label-title{font-size:10px;font-weight:600;color:var(--cream);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.feat-label-sub{font-size:9px;color:var(--gold);letter-spacing:.5px}
+.feat-badge{position:absolute;top:8px;left:8px;font-size:8px;letter-spacing:1px;text-transform:uppercase;font-weight:700;padding:3px 7px;border-radius:2px;background:var(--red);color:#fff}
+.feat-now-tag{position:absolute;top:8px;right:8px;font-size:8px;color:var(--gold);letter-spacing:1px;font-weight:600}
+
+/* GENRE STRIP */
+.genre-strip{display:flex;gap:8px;padding:13px 28px;border-bottom:1px solid var(--line);background:var(--ink);overflow-x:auto}
+.genre-strip::-webkit-scrollbar{display:none}
+.gtag{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border:1px solid var(--line2);border-radius:2px;cursor:pointer;color:var(--txt2);white-space:nowrap;transition:all .15s;background:none;font-family:'Inter',sans-serif}
+.gtag:hover,.gtag.on{background:var(--gold);border-color:var(--gold);color:var(--ink);font-weight:700}
+
+/* SECTIONS */
+.section{padding:28px}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;color:var(--cream)}
+.sec-title span{color:var(--gold)}
+.sec-count{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--txt3)}
+.divider{height:1px;background:var(--line);margin:0 28px}
+
+/* GRID */
+.movie-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:12px}
+.mcard{border-radius:var(--r);overflow:hidden;cursor:pointer;background:var(--ink2);border:1px solid var(--line);transition:border-color .2s,transform .18s}
+.mcard:hover{border-color:var(--gold);transform:translateY(-3px)}
+.mcard-poster{width:100%;height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;background:var(--ink3)}
+.mcard-icon-lg{font-size:48px;margin-bottom:4px}
+.mcard-runtime-tag{font-size:10px;letter-spacing:.5px;color:var(--txt3)}
+.mcard-badge{position:absolute;top:9px;left:9px;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;padding:3px 7px;border-radius:2px}
+.badge-now{background:var(--red);color:#fff}
+.badge-soon{background:var(--ink2);color:var(--gold);border:1px solid var(--gold)}
+.mcard-body{padding:10px 12px}
+.mcard-title{font-size:12px;font-weight:600;color:var(--cream);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mcard-row{display:flex;justify-content:space-between;align-items:center}
+.mcard-genre{font-size:10px;color:var(--txt3)}
+.mcard-price{font-size:10px;color:var(--txt2);margin-top:5px}
+
+/* BOOKING */
+.bk-header{padding:14px 28px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;background:var(--ink2)}
+.bk-back{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt2);cursor:pointer;border:1px solid var(--line2);padding:7px 14px;border-radius:2px;transition:all .15s;background:none;font-family:'Inter',sans-serif}
+.bk-back:hover{color:var(--cream);border-color:var(--txt3)}
+.bk-htitle{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--cream)}
+.bk-hsub{font-size:11px;color:var(--txt3);margin-top:1px}
+.bk-layout{display:grid;grid-template-columns:1fr 275px;gap:14px;padding:16px 28px;align-items:start}
+.bk-panel{background:var(--ink2);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;margin-bottom:12px}
+.bk-panel-title{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.date-row{display:flex;gap:7px;flex-wrap:wrap}
+.date-chip{background:var(--ink3);border:1px solid var(--line2);border-radius:var(--r);padding:8px 11px;cursor:pointer;text-align:center;min-width:50px;transition:all .15s}
+.dc-day{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--txt3)}
+.dc-num{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--cream);line-height:1}
+.dc-mo{font-size:9px;color:var(--txt3)}
+.date-chip:hover,.date-chip.on{border-color:var(--gold)}
+.date-chip.on .dc-num{color:var(--gold)}
+.time-row{display:flex;gap:7px;flex-wrap:wrap}
+.time-chip{font-size:11px;padding:7px 13px;border:1px solid var(--line2);border-radius:var(--r);cursor:pointer;color:var(--txt2);transition:all .15s;background:none;font-family:'Inter',sans-serif}
+.time-chip:hover,.time-chip.on{border-color:var(--gold);color:var(--gold)}
+.screen-bar{background:var(--line);height:3px;border-radius:2px;margin-bottom:22px;position:relative}
+.screen-bar::after{content:'SCREEN';position:absolute;left:50%;transform:translateX(-50%);top:6px;font-size:8px;letter-spacing:3px;color:var(--txt3)}
+.seat-area{padding-top:20px;display:flex;flex-direction:column;gap:6px;align-items:center}
+.seat-row-wrap{display:flex;gap:5px;align-items:center}
+.row-lbl{width:14px;text-align:center;font-size:9px;color:var(--txt3)}
+.seat{width:26px;height:24px;border-radius:4px 4px 3px 3px;border:1px solid;cursor:pointer;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all .12s;font-family:'Inter',sans-serif}
+.seat.avail{background:var(--ink3);border-color:var(--line2);color:var(--txt3)}
+.seat.avail:hover{border-color:var(--gold);color:var(--gold)}
+.seat.sel{background:var(--gold);border-color:var(--gold-lt);color:var(--ink)}
+.seat.taken{background:transparent;border-color:var(--line);color:var(--line2);cursor:default}
+.seat.prem{border-color:#6b5b2e}
+.gap-seat{width:11px}
+.legend-row{display:flex;gap:14px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.leg{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--txt3)}
+.leg-sq{width:12px;height:12px;border-radius:3px;border:1px solid}
+
+/* SUMMARY */
+.summ-card{background:var(--ink2);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;position:sticky;top:14px}
+.summ-label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.summ-movie-row{display:flex;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:12px;align-items:flex-start}
+.summ-icon-box{width:46px;height:62px;background:var(--ink3);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;border:1px solid var(--line)}
+.summ-mtitle{font-size:12px;font-weight:600;color:var(--cream);margin-bottom:3px}
+.summ-msub{font-size:10px;color:var(--txt3);line-height:1.6}
+.summ-line{display:flex;justify-content:space-between;font-size:11px;padding:3px 0;color:var(--txt3)}
+.summ-line strong{color:var(--txt);font-weight:500}
+.seats-tag{font-size:10px;color:var(--gold);margin-top:3px;word-break:break-all;line-height:1.6}
+.summ-total-row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0 0;border-top:1px solid var(--line);margin-top:8px}
+.summ-total-lbl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt3)}
+.summ-total-amt{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gold);letter-spacing:1px}
+.book-btn{width:100%;margin-top:12px;background:var(--gold);color:var(--ink);border:none;padding:12px;border-radius:var(--r);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:'Inter',sans-serif;transition:background .15s}
+.book-btn:hover:not(:disabled){background:var(--gold-lt)}
+.book-btn:disabled{background:var(--ink3);color:var(--txt3);cursor:not-allowed}
+
+/* CONFIRM */
+.confirm-wrap{display:flex;justify-content:center;padding:44px 24px}
+.ticket-outer{max-width:360px;width:100%}
+.ticket-top{background:var(--ink2);border:1px solid var(--line);border-radius:var(--r) var(--r) 0 0;padding:26px 22px;text-align:center}
+.tick-check{width:46px;height:46px;border:1px solid var(--gold);border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:20px}
+.tick-head{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;color:var(--cream);margin-bottom:4px}
+.tick-sub{font-size:11px;color:var(--txt3)}
+.ticket-body{background:var(--ink3);border:1px solid var(--line);border-top:none;padding:16px 22px}
+.tick-movie-name{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:1.5px;color:var(--cream);margin-bottom:2px}
+.tick-genre-tag{font-size:10px;color:var(--txt3)}
+.tick-divider{border-top:1px dashed var(--line2);margin:12px 0}
+.tick-row{display:flex;justify-content:space-between;margin-bottom:7px}
+.tick-lbl{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--txt3)}
+.tick-val{font-size:11px;font-weight:600;color:var(--txt)}
+.tick-id-box{background:var(--ink2);border:1px solid var(--line);border-radius:var(--r);padding:9px 14px;text-align:center;font-family:'Courier New',monospace;font-size:13px;letter-spacing:2px;color:var(--gold);margin:12px 0}
+.tick-actions{display:flex;gap:8px}
+.tick-btn{flex:1;padding:10px;border-radius:var(--r);font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'Inter',sans-serif;border:none}
+.tick-btn-ghost{background:var(--ink2);color:var(--txt);border:1px solid var(--line2) !important}
+.tick-btn-gold{background:var(--gold);color:var(--ink)}
+.tick-btn-gold:hover{background:var(--gold-lt)}
+
+/* MY BOOKINGS */
+.my-wrap{padding:28px}
+.my-title{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:2px;color:var(--cream);margin-bottom:20px}
+.my-title span{color:var(--gold)}
+.bk-item{display:flex;align-items:center;gap:14px;background:var(--ink2);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;margin-bottom:9px}
+.bk-item-icon{font-size:28px;width:44px;text-align:center;flex-shrink:0}
+.bk-item-info{flex:1;min-width:0}
+.bk-item-title{font-size:13px;font-weight:600;color:var(--cream);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bk-item-meta{font-size:10px;color:var(--txt3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bk-item-id{font-size:9px;color:var(--line2);margin-top:2px;letter-spacing:.5px}
+.bk-item-right{text-align:right;flex-shrink:0}
+.bk-price{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--gold)}
+.bk-status{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#4ade80;border:1px solid #22c55e44;padding:3px 8px;border-radius:2px;margin-top:3px;display:inline-block}
+.empty-wrap{text-align:center;padding:52px 16px;color:var(--txt3)}
+.empty-icon{font-size:42px;margin-bottom:12px;opacity:.4}
+.empty-msg{font-size:12px;margin-bottom:18px}
+.empty-cta{background:var(--gold);color:var(--ink);border:none;padding:10px 22px;border-radius:var(--r);font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'Inter',sans-serif}
+</style>
+</head>
+<body>
+
+<h2 class="sr-only">CineMax by Yogesh — full movie booking system</h2>
+<div id="root">
+
+<nav class="nav">
+  <div class="wordmark" onclick="goPage('home')">CINE<em>MAX</em></div>
+  <div class="nav-links">
+    <span class="nav-link on" id="nl-home" onclick="goPage('home')">Films</span>
+    <span class="nav-link" id="nl-bookings" onclick="goPage('bookings')">My Tickets</span>
+    <button class="nav-pill" onclick="goPage('bookings')" id="ticket-pill">0 Tickets</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div class="pg on" id="pg-home">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Premium Cinema Experience</div>
+      <div class="hero-h1">THE WORLD'S<br>STORIES<br><span>AWAIT YOU</span></div>
+      <div class="hero-sub">Handpicked Hollywood blockbusters, premium seating, and seamless booking — all in one place.</div>
+      <div class="hero-search">
+        <input id="search" type="text" placeholder="Search films..." oninput="renderHome()">
+        <button>Search</button>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-num">12</div><div class="stat-lbl">Films weekly</div></div>
+        <div><div class="stat-num">6</div><div class="stat-lbl">Showings daily</div></div>
+        <div><div class="stat-num">4K</div><div class="stat-lbl">Dolby Atmos</div></div>
+      </div>
+    </div>
+    <div class="hero-right" id="hero-right"></div>
+  </div>
+  <div class="genre-strip" id="genre-strip"></div>
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-title">NOW <span>SHOWING</span></div>
+      <div class="sec-count" id="now-count"></div>
+    </div>
+    <div class="movie-grid" id="now-grid"></div>
+  </div>
+  <div class="divider"></div>
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-title">COMING <span>SOON</span></div>
+      <div class="sec-count" id="soon-count"></div>
+    </div>
+    <div class="movie-grid" id="soon-grid"></div>
+  </div>
+</div>
+
+<!-- BOOKING -->
+<div class="pg" id="pg-booking">
+  <div class="bk-header">
+    <button class="bk-back" onclick="goPage('home')">← Back</button>
+    <div>
+      <div class="bk-htitle" id="bk-title"></div>
+      <div class="bk-hsub" id="bk-sub"></div>
+    </div>
+  </div>
+  <div class="bk-layout">
+    <div>
+      <div class="bk-panel">
+        <div class="bk-panel-title">Select Date</div>
+        <div class="date-row" id="date-row"></div>
+      </div>
+      <div class="bk-panel">
+        <div class="bk-panel-title">Select Showtime</div>
+        <div class="time-row" id="time-row"></div>
+      </div>
+      <div class="bk-panel">
+        <div class="bk-panel-title">Select Your Seats</div>
+        <div class="screen-bar"></div>
+        <div class="seat-area" id="seat-area"></div>
+        <div class="legend-row">
+          <div class="leg"><div class="leg-sq" style="background:var(--ink3);border-color:var(--line2)"></div>Available</div>
+          <div class="leg"><div class="leg-sq" style="background:var(--gold);border-color:var(--gold-lt)"></div>Selected</div>
+          <div class="leg"><div class="leg-sq" style="background:transparent;border-color:var(--line)"></div>Taken</div>
+          <div class="leg"><div class="leg-sq" style="background:var(--ink3);border-color:#6b5b2e"></div>Premium</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="summ-card">
+        <div class="summ-label">Booking Summary</div>
+        <div class="summ-movie-row">
+          <div class="summ-icon-box" id="summ-icon"></div>
+          <div>
+            <div class="summ-mtitle" id="summ-title"></div>
+            <div class="summ-msub" id="summ-sub2"></div>
+          </div>
+        </div>
+        <div class="summ-line"><span>Date</span><strong id="s-date">—</strong></div>
+        <div class="summ-line"><span>Time</span><strong id="s-time">—</strong></div>
+        <div class="summ-line"><span>Seats</span><strong id="s-cnt">0</strong></div>
+        <div class="summ-line"><span>Per seat</span><strong id="s-rate">—</strong></div>
+        <div class="seats-tag" id="s-seats"></div>
+        <div class="summ-total-row">
+          <div class="summ-total-lbl">Total</div>
+          <div class="summ-total-amt" id="s-total">₹0</div>
+        </div>
+        <button class="book-btn" id="book-btn" onclick="doBook()" disabled>Select seats to continue</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM -->
+<div class="pg" id="pg-confirm">
+  <div class="confirm-wrap">
+    <div class="ticket-outer">
+      <div class="ticket-top">
+        <div class="tick-check">✓</div>
+        <div class="tick-head">Booking Confirmed</div>
+        <div class="tick-sub">Your seats are reserved. See you at the movies!</div>
+      </div>
+      <div class="ticket-body">
+        <div class="tick-movie-name" id="t-name"></div>
+        <div class="tick-genre-tag" id="t-genre"></div>
+        <div class="tick-divider"></div>
+        <div class="tick-row"><span class="tick-lbl">Date</span><span class="tick-val" id="t-date"></span></div>
+        <div class="tick-row"><span class="tick-lbl">Show</span><span class="tick-val" id="t-show"></span></div>
+        <div class="tick-row"><span class="tick-lbl">Seats</span><span class="tick-val" id="t-seats"></span></div>
+        <div class="tick-row"><span class="tick-lbl">Tickets</span><span class="tick-val" id="t-cnt"></span></div>
+        <div class="tick-row"><span class="tick-lbl">Total Paid</span><span class="tick-val" style="color:var(--gold);font-size:13px" id="t-amt"></span></div>
+        <div class="tick-divider"></div>
+        <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--txt3);text-align:center;margin-bottom:5px">Booking Reference</div>
+        <div class="tick-id-box" id="t-ref"></div>
+        <div class="tick-actions">
+          <button class="tick-btn tick-btn-ghost" onclick="goPage('home')">← Home</button>
+          <button class="tick-btn tick-btn-gold" onclick="goPage('bookings')">My Tickets</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MY BOOKINGS -->
+<div class="pg" id="pg-bookings">
+  <div class="my-wrap">
+    <div class="my-title">MY <span>TICKETS</span></div>
+    <div id="bk-list"></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+const MOVIES=[
+  {id:1,title:"Deadpool & Wolverine",genre:"Action",rating:"8.7",year:2024,status:"now",icon:"🎭",price:280,runtime:"2h 8m"},
+  {id:2,title:"Dune: Part Two",genre:"Sci-Fi",rating:"8.5",year:2024,status:"now",icon:"🏜️",price:320,runtime:"2h 46m"},
+  {id:3,title:"Oppenheimer",genre:"Drama",rating:"8.9",year:2023,status:"now",icon:"☢️",price:300,runtime:"3h 0m"},
+  {id:4,title:"A Quiet Place: Day One",genre:"Horror",rating:"7.5",year:2024,status:"now",icon:"👁️",price:240,runtime:"1h 39m"},
+  {id:5,title:"Inside Out 2",genre:"Comedy",rating:"7.9",year:2024,status:"now",icon:"🎈",price:220,runtime:"1h 40m"},
+  {id:6,title:"Joker: Folie à Deux",genre:"Drama",rating:"5.5",year:2024,status:"now",icon:"🃏",price:260,runtime:"2h 18m"},
+  {id:7,title:"Avengers: Secret Wars",genre:"Action",rating:"—",year:2026,status:"soon",icon:"🦸",price:350,runtime:"TBA"},
+  {id:8,title:"Avatar 3",genre:"Sci-Fi",rating:"—",year:2025,status:"soon",icon:"🌿",price:380,runtime:"TBA"},
+  {id:9,title:"Mission Impossible 8",genre:"Action",rating:"—",year:2025,status:"soon",icon:"🔱",price:310,runtime:"TBA"},
+];
+const GENRES=["All","Action","Sci-Fi","Drama","Comedy","Horror"];
+const TIMES=["10:30 AM","1:00 PM","3:30 PM","6:00 PM","8:30 PM","11:00 PM"];
+const ROWS=["A","B","C","D","E","F"];
+const D=new Date();
+const DATES=Array.from({length:6},(_,i)=>{
+  const d=new Date(D);d.setDate(D.getDate()+i);
+  const days=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  const mos=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  return{day:days[d.getDay()],num:d.getDate(),mo:mos[d.getMonth()],full:`${days[d.getDay()]} ${d.getDate()} ${mos[d.getMonth()]}`};
+});
+let S={genre:"All",movie:null,dateIdx:0,time:null,seats:[],booked:{}};
+
+function getLocal(){try{return JSON.parse(localStorage.getItem("cmx2")||"[]")}catch{return[]}}
+function setLocal(d){try{localStorage.setItem("cmx2",JSON.stringify(d))}catch{}}
+
+function goPage(name){
+  document.querySelectorAll(".pg").forEach(p=>p.classList.remove("on"));
+  document.querySelectorAll(".nav-link").forEach(l=>l.classList.remove("on"));
+  document.getElementById("pg-"+name).classList.add("on");
+  const nl=document.getElementById("nl-"+name);if(nl)nl.classList.add("on");
+  if(name==="bookings")renderBookings();
+  syncPill();window.scrollTo(0,0);
+}
+function syncPill(){
+  const n=getLocal().length;
+  document.getElementById("ticket-pill").textContent=n+" Ticket"+(n!==1?"s":"");
+}
+function buildHeroRight(){
+  const now=MOVIES.filter(m=>m.status==="now");
+  const pick=[now[0],now[1],now[2]];
+  document.getElementById("hero-right").innerHTML=`
+    <div class="feat-card side2">
+      <div class="feat-poster"><div class="feat-icon-xs">${pick[2]?pick[2].icon:""}</div></div>
+      ${pick[2]?`<div class="feat-label"><div class="feat-label-title">${pick[2].title}</div></div>`:""}
+    </div>
+    <div class="feat-card side">
+      <div class="feat-poster"><div class="feat-icon-sm">${pick[1]?pick[1].icon:""}</div></div>
+      ${pick[1]?`<div class="feat-label"><div class="feat-label-title">${pick[1].title}</div><div class="feat-label-sub">★ ${pick[1].rating}</div></div>`:""}
+    </div>
+    <div class="feat-card main" onclick="openMovie(${pick[0].id})" style="cursor:pointer">
+      <div class="feat-poster"><div class="feat-icon">${pick[0].icon}</div></div>
+      <div class="feat-badge">Now Showing</div>
+      <div class="feat-now-tag">★ ${pick[0].rating}</div>
+      <div class="feat-label">
+        <div class="feat-label-title">${pick[0].title}</div>
+        <div class="feat-label-sub">Book Now →</div>
+      </div>
+    </div>`;
+}
+function renderHome(){
+  const q=(document.getElementById("search")||{}).value||"";
+  const g=S.genre;
+  document.getElementById("genre-strip").innerHTML=GENRES.map(gn=>`<button class="gtag${gn===g?" on":""}" onclick="setGenre('${gn}')">${gn}</button>`).join("");
+  const match=m=>((g==="All"||m.genre===g)&&m.title.toLowerCase().includes(q.toLowerCase()));
+  const now=MOVIES.filter(m=>m.status==="now"&&match(m));
+  const soon=MOVIES.filter(m=>m.status==="soon"&&match(m));
+  document.getElementById("now-count").textContent=now.length+" films";
+  document.getElementById("soon-count").textContent=soon.length+" films";
+  document.getElementById("now-grid").innerHTML=now.map(c).join("")||"<p style='color:var(--txt3);font-size:12px'>No films found.</p>";
+  document.getElementById("soon-grid").innerHTML=soon.map(c).join("")||"<p style='color:var(--txt3);font-size:12px'>No films found.</p>";
+}
+function c(m){
+  const badge=m.status==="now"?`<div class="mcard-badge badge-now">Now Showing</div>`:`<div class="mcard-badge badge-soon">Coming Soon</div>`;
+  const rat=m.rating!=="—"?` · ★ ${m.rating}`:"";
+  const click=m.status==="now"?`onclick="openMovie(${m.id})"`:`onclick="alert('Coming soon!')"`;
+  return`<div class="mcard" ${click}>
+    <div class="mcard-poster">${badge}<div class="mcard-icon-lg">${m.icon}</div><div class="mcard-runtime-tag">${m.runtime}</div></div>
+    <div class="mcard-body">
+      <div class="mcard-title" title="${m.title}">${m.title}</div>
+      <div class="mcard-row"><span class="mcard-genre">${m.genre}${rat}</span></div>
+      <div class="mcard-price">From ₹${m.price}</div>
+    </div></div>`;
+}
+function setGenre(g){S.genre=g;renderHome()}
+function openMovie(id){
+  const m=MOVIES.find(x=>x.id===id);if(!m)return;
+  S.movie=m;S.seats=[];S.dateIdx=0;S.time=null;
+  document.getElementById("bk-title").textContent=m.title;
+  document.getElementById("bk-sub").textContent=`${m.genre}  ·  ${m.runtime}  ·  ★ ${m.rating}`;
+  document.getElementById("summ-icon").textContent=m.icon;
+  document.getElementById("summ-title").textContent=m.title;
+  document.getElementById("summ-sub2").textContent=`${m.genre} · ${m.runtime} · ★ ${m.rating}`;
+  document.getElementById("s-rate").textContent=`₹${m.price}`;
+  renderDates();renderTimes();renderSeats();refreshSumm();
+  goPage("booking");
+}
+function bookedKey(){return`${S.movie.id}_${S.dateIdx}_${S.time}`}
+function ensureBooked(){
+  const k=bookedKey();
+  if(!S.booked[k]){
+    const set=new Set();
+    while(set.size<35+Math.floor(Math.random()*15)){
+      set.add(ROWS[Math.floor(Math.random()*ROWS.length)]+(1+Math.floor(Math.random()*9)));
+    }
+    S.booked[k]=[...set];
+  }
+}
+function renderDates(){
+  document.getElementById("date-row").innerHTML=DATES.map((d,i)=>`
+    <div class="date-chip${i===S.dateIdx?" on":""}" onclick="pickDate(${i})">
+      <div class="dc-day">${d.day}</div><div class="dc-num">${d.num}</div><div class="dc-mo">${d.mo}</div>
+    </div>`).join("");
+}
+function renderTimes(){
+  document.getElementById("time-row").innerHTML=TIMES.map(t=>`
+    <button class="time-chip${t===S.time?" on":""}" onclick="pickTime('${t}')">${t}</button>`).join("");
+}
+function renderSeats(){
+  const booked=S.time?(S.booked[bookedKey()]||[]):[];
+  const prem=["E","F"];
+  let html="";
+  ROWS.forEach(r=>{
+    html+=`<div class="seat-row-wrap"><div class="row-lbl">${r}</div>`;
+    for(let i=1;i<=9;i++){
+      if(i===5)html+=`<div class="gap-seat"></div>`;
+      const sid=r+i,isTaken=booked.includes(sid),isSel=S.seats.includes(sid),isP=prem.includes(r);
+      let cls="seat";
+      if(isTaken)cls+=" taken";
+      else if(isSel)cls+=" sel";
+      else{cls+=" avail";if(isP)cls+=" prem"}
+      const cb=isTaken?"":"onclick=\"toggleSeat('"+sid+"')\"";
+      html+=`<div class="${cls}" ${cb}>${isSel?"✓":i}</div>`;
+    }
+    html+=`</div>`;
+  });
+  document.getElementById("seat-area").innerHTML=html;
+}
+function pickDate(i){S.dateIdx=i;S.seats=[];if(S.time)ensureBooked();renderDates();renderSeats();refreshSumm()}
+function pickTime(t){S.time=t;S.seats=[];ensureBooked();renderTimes();renderSeats();refreshSumm()}
+function toggleSeat(sid){
+  const idx=S.seats.indexOf(sid);
+  if(idx>=0)S.seats.splice(idx,1);
+  else if(S.seats.length<8)S.seats.push(sid);
+  else{alert("Max 8 seats per booking.");return}
+  renderSeats();refreshSumm();
+}
+function refreshSumm(){
+  const m=S.movie;if(!m)return;
+  const cnt=S.seats.length,tot=cnt*m.price;
+  document.getElementById("s-date").textContent=DATES[S.dateIdx].full;
+  document.getElementById("s-time").textContent=S.time||"—";
+  document.getElementById("s-cnt").textContent=cnt;
+  document.getElementById("s-seats").textContent=cnt?S.seats.join("  ·  "):"";
+  document.getElementById("s-total").textContent=`₹${tot.toLocaleString("en-IN")}`;
+  const btn=document.getElementById("book-btn");
+  if(cnt>0&&S.time){btn.disabled=false;btn.textContent=`Confirm ${cnt} seat${cnt>1?"s":""} — ₹${tot.toLocaleString("en-IN")}`}
+  else{btn.disabled=true;btn.textContent="Select seats to continue"}
+}
+function doBook(){
+  const m=S.movie;if(!m||!S.seats.length||!S.time)return;
+  const tot=S.seats.length*m.price;
+  const ref="CX"+Date.now().toString(36).toUpperCase();
+  const entry={ref,icon:m.icon,movie:m.title,genre:m.genre,runtime:m.runtime,date:DATES[S.dateIdx].full,time:S.time,seats:[...S.seats],count:S.seats.length,total:tot};
+  setLocal([entry,...getLocal()]);
+  document.getElementById("t-name").textContent=m.title;
+  document.getElementById("t-genre").textContent=`${m.genre} · ${m.runtime}`;
+  document.getElementById("t-date").textContent=entry.date;
+  document.getElementById("t-show").textContent=entry.time;
+  document.getElementById("t-seats").textContent=entry.seats.join(", ");
+  document.getElementById("t-cnt").textContent=entry.count+" ticket"+(entry.count>1?"s":"");
+  document.getElementById("t-amt").textContent=`₹${tot.toLocaleString("en-IN")}`;
+  document.getElementById("t-ref").textContent=ref;
+  goPage("confirm");
+}
+function renderBookings(){
+  const list=getLocal();
+  const el=document.getElementById("bk-list");
+  if(!list.length){
+    el.innerHTML=`<div class="empty-wrap"><div class="empty-icon">🎬</div><div class="empty-msg">No tickets yet. Find a film and book your seat.</div><button class="empty-cta" onclick="goPage('home')">Browse Films</button></div>`;
+    return;
+  }
+  el.innerHTML=list.map(b=>`
+    <div class="bk-item">
+      <div class="bk-item-icon">${b.icon||"🎬"}</div>
+      <div class="bk-item-info">
+        <div class="bk-item-title">${b.movie}</div>
+        <div class="bk-item-meta">${b.date} · ${b.time} · Seats: ${b.seats.join(", ")}</div>
+        <div class="bk-item-id">REF: ${b.ref}</div>
+      </div>
+      <div class="bk-item-right">
+        <div class="bk-price">₹${b.total.toLocaleString("en-IN")}</div>
+        <div class="bk-status">Confirmed</div>
+      </div>
+    </div>`).join("");
+}
+buildHeroRight();renderHome();syncPill();
+</script>
+</body>
+</html>
